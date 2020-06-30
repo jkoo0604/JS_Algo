@@ -180,6 +180,62 @@ class SLL {
         }
         return secondRunner;
     }
+
+    flip() {
+        if (this.head == null | this.head.next == null) return;
+        
+        var runner = this.head;
+        var runner1 = runner.next;
+        var runner2 = runner1.next;
+        this.head.next = null;
+
+        while (runner1 != null) {
+            this.head = runner1;
+            runner1.next = runner;
+            if (!runner2) {
+                console.log('end');
+                return;
+            }
+            runner=runner1;
+            runner1=runner2;
+            runner2=runner2.next;                    
+        } 
+
+    }
+
+    average(){
+        if(this.isEmpty())
+            return null;
+        let runner = this.head;
+        let length = 0;
+        let sum = 0;
+        let avg = 0;
+        while (runner !== null){
+            sum += runner.data;//if sum triggers first you don't need to manually add it
+            runner = runner.next;
+            length++;
+        }
+        avg = sum / length;
+        return avg;
+    }
+
+    getMiddleData(){
+        if(this.isEmpty())
+            return null;
+        if(this.head.next==null)
+            return null;
+        let doublerunner =this.head;
+        let midreturnrunner =this.head;
+        while(doublerunner){
+            doublerunner=doublerunner.next.next;
+            midreturnrunner=midreturnrunner.next;
+            if(doublerunner==null)
+                return null;
+            if(doublerunner.next==null)
+                return midreturnrunner;
+        }
+        return null;
+    }
 }
 
 class Node {
