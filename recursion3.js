@@ -5,6 +5,11 @@ function reverse(str) {
     return str[str.length-1] + reverse(str.slice(0,str.length-1));
 }
 
+// function reverse(str){
+// 	if(str.length <= 1) return str;
+// 	return reverse(str.slice(1)) + str[0];
+// }
+
 console.log(reverse('awesome')) // 'emosewa'
 console.log(reverse('rithmschool')) // 'loohcsmhtir'
 
@@ -17,6 +22,13 @@ function isPalindrome(str) {
     if (str[0] !== str[str.length-1]) return false;
     return isPalindrome(str.slice(1,str.length-1));
 }
+
+// function isPalindrome(str){
+//     if(str.length === 1) return true;
+//     if(str.length === 2) return str[0] === str[1];
+//     if(str[0] === str.slice(-1)) return isPalindrome(str.slice(1,-1))
+//     return false;
+// }
 
 console.log(isPalindrome('awesome')) // false
 console.log(isPalindrome('foobar')) // false
@@ -59,6 +71,18 @@ function flatten(arr) {
     helper(arr);
     return returnArr;
 }
+
+// function flatten(oldArr){
+//     var newArr = []
+//     for(var i = 0; i < oldArr.length; i++){
+//         if(Array.isArray(oldArr[i])){
+//             newArr = newArr.concat(flatten(oldArr[i]))
+//         } else {
+//             newArr.push(oldArr[i])
+//         }
+//     } 
+//     return newArr;
+// }
 
 console.log(flatten([1, 2, 3, [4, 5]])) // [1, 2, 3, 4, 5]
 console.log(flatten([1, [2, [3, 4], [[5]]]])) // [1, 2, 3, 4, 5]
