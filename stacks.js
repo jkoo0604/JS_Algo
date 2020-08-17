@@ -12,7 +12,7 @@ class Stack {
         this.size = 0;
     }
 
-    print() {
+    print2() {
         if (this.size === 0) {
             console.log('******');
             console.log('first: ', this.first);
@@ -35,6 +35,21 @@ class Stack {
             console.log('size: ', this.size);
             console.log('******');
         }
+    }
+
+    print() {
+        let runner = this.first;
+        let arr = [];
+        while (runner) {
+            arr.push(runner.val);
+            runner = runner.next;
+        }
+        console.log('******');
+        arr ? console.log(arr) : '';
+        console.log('first: ', this.first ? this.first.val : this.first);
+        console.log('last: ', this.last ? this.last.val : this.last);
+        console.log('size: ', this.size);
+        console.log('******');
     }
 
     push(val) {
@@ -67,12 +82,12 @@ class Stack {
 }
 
 var stack = new Stack();
-stack.push(13);
-stack.push(15);
-stack.push(18);
-stack.push(20);
-stack.push(25);
-stack.push(35);
+// stack.push(13);
+// stack.push(15);
+// stack.push(18);
+// stack.push(20);
+// stack.push(25);
+// stack.push(35);
 stack.push(42);
 stack.print();
 console.log(stack.pop());
