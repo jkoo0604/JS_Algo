@@ -24,6 +24,9 @@ class priorityQueue {
     // from the highestPriority array
     dequeue(){}
 
+    // pull highest priority element
+    dequeueHighestPriority(){}
+
     // look at the front node
     peekFront(){}
 

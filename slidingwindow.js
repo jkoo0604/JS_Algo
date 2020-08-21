@@ -74,6 +74,7 @@ function maxSubarraySum(arr, num){
     }
     maxSum = tempSum;
     for (let i=num; i<arr.length; i++) {
+        // remove the first value and add the new one (all other values will be repeated in the new window)
         tempSum = tempSum - arr[i-num] + arr[i];
         maxSum = Math.max(tempSum, maxSum);
     }
