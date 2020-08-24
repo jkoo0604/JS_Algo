@@ -29,10 +29,47 @@ class MaxBinaryHeap {
         }
         return this;
     }
+
+    remove() { // extract maximum (for MinBinaryHeap, extract min)
+        // swap with the last element in the array, and compare the new root with its children, and swap with the largest children (greater than itself)
+        if (this.values.length === 0) return null;
+        var removed = this.values[0];
+        this.values[0] = this.values[this.values.length-1];
+        this.values.pop();
+        if (this.values.length === 0) return removed;        
+        // console.log(this.values);
+        var idx = 0;
+        var childLeft = (2 * idx) + 1;
+        var childRight = (2 * idx) + 2;
+        while (this.values[idx] < this.values[childLeft] || this.values[idx] < this.values[childRight]) {
+            var temp = this.values[idx];
+            var changeIdx = !this.values[childRight] ? childLeft : (this.values[childLeft] > this.values[childRight] ? childLeft : childRight);
+            this.values[idx] = this.values[changeIdx];
+            this.values[changeIdx] = temp;
+            idx = changeIdx;
+            childLeft = (2 * idx) + 1;
+            childRight = (2 * idx) + 2;
+        }
+        console.log(this.values);
+        return removed;
+    }
 }
 
 var mbh = new MaxBinaryHeap();
-console.log(mbh.insert(10));
-console.log(mbh.insert(50));
-console.log(mbh.insert(25));
-console.log(mbh.insert(15));
+console.log(mbh.insert(41));
+console.log(mbh.insert(39));
+console.log(mbh.insert(33));
+console.log(mbh.insert(18));
+console.log(mbh.insert(27));
+console.log(mbh.insert(12));
+console.log(mbh.insert(55));
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.remove());
+console.log(mbh.insert(48));
