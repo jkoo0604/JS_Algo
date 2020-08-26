@@ -14,7 +14,7 @@
 //      linear probing: when a collision occurs, search through array to find the next empty slot
 
 class HashTable {
-    constructor(size=13) { // uses a prime number as default size
+    constructor(size=53) { // uses a prime number as default size
         this.keyMap = new Array(size);
     }
 
@@ -35,30 +35,98 @@ class HashTable {
             this.keyMap[hashedKey] = [];
         }
         this.keyMap[hashedKey].push([key, value]);
-        return [key, value];
+        return this;
+    }
+
+    set2(key, value) { // if key already exists, update value
+        let hashedKey = this._hash(key);
+        if (!this.keyMap[hashedKey]) {
+            this.keyMap[hashedKey] = [[key, value]];
+        } else {
+            let checkDupe = this.get(key);
+            if (checkDupe) {
+                for (let i=0; i<this.keyMap[hashedKey].length; i++) {
+                    if (this.keyMap[hashedKey][i][0]===key) {
+                        this.keyMap[hashedKey][i][1] = value;
+                        break;
+                    }
+                }
+            } else {
+                this.keyMap[hashedKey].push([key, value]);
+            }
+        }
+        return;
     }
 
     get(key) {
         let hashedKey = this._hash(key);
-        if (!this.keyMap[hashedKey]) return null;
         let arr = this.keyMap[hashedKey];
+        if (!arr) return null;
         let arrLen = this.keyMap[hashedKey].length;
         for (let i=0; i<arrLen; i++) {
             if (arr[i][0]===key) {
-                return arr[i];
+                return arr[i][1];
             }
         }
         return null;
     }
+
+    keys() {
+        let keysArr = [];
+        for (let i=0; i<this.keyMap.length; i++) {
+            if (this.keyMap[i]) {
+                for (let j=0; j<this.keyMap[i].length; j++) {
+                    keysArr.push(this.keyMap[i][j][0]);
+                }
+            }
+        }
+        return keysArr;
+    }
+
+    values() {
+        let valuesArr = [];
+        for (let i=0; i<this.keyMap.length; i++) {
+            if (this.keyMap[i]) {
+                for (let j=0; j<this.keyMap[i].length; j++) {
+                    valuesArr.push(this.keyMap[i][j][1]);
+                }
+            }   
+        }
+        return valuesArr;
+    }
+
+    valuesUnique() {
+        let valuesArr = [];
+        for (let i=0; i<this.keyMap.length; i++) {
+            if (this.keyMap[i]) {
+                for (let j=0; j<this.keyMap[i].length; j++) {
+                    if (!valuesArr.includes(this.keyMap[i][j][1])) {
+                        valuesArr.push(this.keyMap[i][j][1]);
+                    }
+                }
+            }
+        }
+        return valuesArr;
+    }
 }
 
-var ht = new HashTable();
-console.log(ht.set('pink', 'hexcodeforpink'));
-console.log(ht.set('cyan', 'hexcodeforcyan'));
-console.log(ht.set('white', 'hexcodeforwhite'));
-console.log(ht.set('slateblue', 'hexcodeforslateblue'));
-console.log(ht.set('orangered', 'hexcodefororangered'));
-console.log(ht.set('salmon', 'hexcodeforsalmon'));
+var ht = new HashTable(17);
+ht.set('maroon', '#800000');
+ht.set('yellow', '#FFFF00');
+ht.set('olive', '#808000');
+ht.set('salmon', '#FA8072');
+ht.set('lightcoral', '#F08080');
+ht.set('mediumvioletred', '#C71585');
+ht.set('plum', '#DDA0DD');
+console.log(ht.keyMap);
+ht.set2('salmon', '#new value for salmon');
+ht.set2('purple', '#DDA0DD');
+ht.set2('violet', '#DDA0DD');
 console.log(ht.keyMap);
 console.log(ht.get('cyan'));
+console.log(ht.get('yellow'));
+console.log(ht.get('maroon'));
 console.log(ht.get('salmon'));
+console.log(ht.keys());
+console.log(ht.values());
+console.log(ht.valuesUnique());
