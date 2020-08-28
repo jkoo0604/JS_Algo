@@ -36,7 +36,7 @@ class Graph {
         if (!this.adjacencyList.hasOwnProperty(name)) this.adjacencyList[name] = [];
     }
 
-    addEdge(vertex1, vertex2) {
+    addEdge(vertex1, vertex2) { // in a directed graph, order of arguments matters - push v1 to v2 or v2 to v1, not both
         if (!this.adjacencyList.hasOwnProperty(vertex1)) this.adjacencyList[vertex1] = [vertex2];
         else {
             if (!this.adjacencyList[vertex1].includes(vertex2)) this.adjacencyList[vertex1].push(vertex2);
@@ -48,7 +48,44 @@ class Graph {
     }
 
     removeEdge(vertex1, vertex2) {
-        
+        if (this.adjacencyList.hasOwnProperty(vertex1) && this.adjacencyList[vertex1].includes(vertex2)) {
+            // console.log('removing vertex2 from vertex2');
+            let newV1 = this.adjacencyList[vertex1].filter(item => item !== vertex2)
+            this.adjacencyList[vertex1] = newV1;
+        }
+        if (this.adjacencyList.hasOwnProperty(vertex2) && this.adjacencyList[vertex2].includes(vertex1)) {
+            // console.log('removing vertex1 from vertex1');
+            let newV2 = this.adjacencyList[vertex2].filter(item => item !== vertex1)
+            this.adjacencyList[vertex2] = newV2;
+        }
+
+    }
+
+    removeVertex(vertex) {
+        if (this.adjacencyList.hasOwnProperty(vertex)) {           
+            while (this.adjacencyList[vertex].length) {
+                this.removeEdge(vertex, this.adjacencyList[vertex][0]);
+            }
+            delete this.adjacencyList[vertex];
+        }
+    }
+    removeVertex2(vertex) {
+        if (this.adjacencyList.hasOwnProperty(vertex)) {           
+            for (let v in this.adjacencyList) {
+                this.removeEdge(v, vertex);
+            }
+            delete this.adjacencyList[vertex];
+        }
+    }
+    removeVertex3(vertex) {
+        if (this.adjacencyList.hasOwnProperty(vertex)) {
+            delete this.adjacencyList[vertex];
+            for (let v in this.adjacencyList) {
+                if (this.adjacencyList[v].includes(vertex)) {
+                    this.adjacencyList[v] = this.adjacencyList[v].filter(item => item !== vertex);
+                }
+            }
+        }
     }
 }
 
@@ -63,4 +100,14 @@ graph.addEdge('Tokyo', 'Aspen');
 console.log(graph.adjacencyList);
 graph.addEdge('Aspen', 'Tokyo');
 graph.addEdge('San Francisco', 'Los Angeles');
+graph.addEdge('San Francisco', 'Tokyo');
+graph.addEdge('San Francisco', 'Dallas');
+graph.addEdge('San Francisco', 'Aspen');
+graph.addEdge('Dallas', 'Aspen');
+graph.addEdge('Dallas', 'Tokyo');
+console.log(graph.adjacencyList);
+graph.removeEdge('Tokyo', 'Los Angeles');
+graph.removeEdge('Tokyo', 'Aspen');
+console.log(graph.adjacencyList);
+graph.removeVertex('San Francisco');
 console.log(graph.adjacencyList);
