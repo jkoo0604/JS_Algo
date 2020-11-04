@@ -24,6 +24,7 @@ class SinglyLinkedList{
         }
 
         this.length++;
+        return this;
     }
 
     pop() {
@@ -47,5 +48,73 @@ class SinglyLinkedList{
         this.tail.next = null;
         this.length--;
         return removed;
+    }
+
+    get(idx){
+        if (idx >= this.length) return null;
+        var counter = 0;
+        var runner = this.head;
+        while (counter < idx) {
+            runner = runner.next;
+            counter++;
+        }
+        return runner;
+    }
+
+    insert(idx, val){
+        if (idx > this.length || idx < 0) return false;
+        var newNode = new Node(val);
+        var counter = 0;
+        var runner = this.head;
+        
+        if (idx === this.length) {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        } else if (idx === 0) {
+            newNode.next = this.head;
+            this.head = newNode;
+        } else {
+            while (counter < idx - 1) {
+                runner = runner.next;
+                counter++;
+            }
+            newNode.next = runner.next;
+            runner.next = newNode;
+        }
+
+        this.length++;
+        return true;
+    }
+
+    rotate(idx) {
+        if (this.length <= 1) return this;
+        var index = idx % this.length;
+        if (index === 0) return this;
+        if (index < 0) index += this.length;
+        var counter = 0;
+        var runner = this.head;
+        while (counter < index - 1) {
+            runner = runner.next;
+            counter++;
+        }
+
+        this.tail.next = this.head;
+        this.head = runner.next;
+        this.tail = runner;
+        this.tail.next = null;
+
+        return this;
+    }
+
+    set(idx, val) {
+        if (idx < 0 || idx >= this.length) return false;
+        var counter = 0;
+        var runner = this.head;
+        while (counter < idx) {
+            runner = runner.next;
+            counter++;
+        }
+        runner.val = val;
+        return true;
     }
 }
