@@ -117,4 +117,31 @@ class SinglyLinkedList{
         runner.val = val;
         return true;
     }
+
+    remove(idx) {
+        if (!this.length || idx >= this.length || idx < 0) return undefined;
+        let removed;
+        let counter = 0;
+        let runner = this.head;
+
+        if (idx === 0) {
+            removed = this.head;
+            this.head = removed.next;
+            if (this.length === 1) this.tail = this.head;
+        }
+        else if (idx === this.length - 1) return this.pop();
+        else {
+            while (counter < idx - 1) {
+                runner = runner.next;
+                counter++;
+            }
+
+            removed = runner.next;
+            runner.next = removed.next;
+            removed.next = null;
+        }   
+
+        this.length--;
+        return removed;
+    }
 }
