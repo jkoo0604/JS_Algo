@@ -65,12 +65,12 @@ function findRotatedIndex(arr, num) {
 
         let mid = Math.floor((left + right) / 2);
         if (arr[mid] === num) return mid;
-        else if (arr[mid] > num) {
-            if (arr[left] > num) return helper(mid + 1, right);
-            else return helper(left, mid - 1);
+        else if (num < arr[mid]) {
+            if (arr[right] > arr[mid]) return helper(left, mid - 1);
+            else return Math.max(helper(mid + 1, right), helper(left, mid - 1));
         } else {
-            if (arr[right] < num) return helper(left, mid - 1);
-            else return helper (mid + 1, right);
+            if (arr[left] < arr[mid]) return helper(mid + 1, right);
+            else return Math.max(helper(mid + 1, right), helper(left, mid - 1));
         }
     
     }
