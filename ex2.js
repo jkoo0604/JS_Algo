@@ -77,3 +77,46 @@ function findRotatedIndex(arr, num) {
 
     return helper(0, arr.length - 1);
 }
+
+// given anagram of a word, find all matches in the dictionary
+function wordMatch(word, map) {
+    // return array of matching words
+    // map is an object
+
+    function makeCombos(word) {
+        if (word.length < 2) return [word];
+
+        let permutations = [];
+        for (let i=0; i<word.length; i++) {
+            if (word.indexOf(word[i]) !==i) continue; // avoid duplicates
+            let subPermutations = makeCombos(word.substring(0,i) + word.substring(i+1));
+            for (let j=0; j<subPermutations.length; j++) {
+                permutations.push(word[i] + subPermutations[j]);
+            }
+        }
+
+        return permutations;
+
+        // return makeCombos(word.substring(1)).map(combo => word[0] + combo);
+    }
+
+    let combos = makeCombos(word);
+    console.log(combos);
+    console.log(combos.length);
+    let matches = [];
+    // let matchesDict = {};
+    // let dupe = [];
+    for (let i=0; i<combos.length; i++) {
+        if (map[combos[i]]) matches.push(combos[i]);
+        // matchesDict[combos[i]] = (matchesDict[combos[i]] || 0) + 1;
+        // if (matchesDict[combos[i]] > 1) dupe.push(combos[i]);
+    }
+    // console.log(dupe);
+    return matches;
+    
+}
+
+let testMap = {sport: 'word def', ports: 'word def', torps: 'word def', ocean: 'word def', soccer: 'word def'};
+let testWord = 'strso';
+
+console.log(wordMatch(testWord, testMap));
