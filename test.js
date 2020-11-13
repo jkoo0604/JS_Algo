@@ -106,3 +106,6 @@ const chooseMenu = (menu, receipts) => {
 // }
 
 console.log(chooseMenu(menu, receipts[1]));
+console.log(30 + '1');
+console.log((-123).toString());
+console.log(Math.log10(1));
