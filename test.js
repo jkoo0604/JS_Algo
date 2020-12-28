@@ -109,3 +109,7 @@ console.log(chooseMenu(menu, receipts[1]));
 console.log(30 + '1');
 console.log((-123).toString());
 console.log(Math.log10(1));
+
+let str = 'a';
+str *= 2;
+console.log(str);
