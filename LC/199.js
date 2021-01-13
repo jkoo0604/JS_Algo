@@ -29,21 +29,32 @@ Explanation:
 var rightSideView = function(root) {
     if (!root) return [];
     let res = [];
-    let queue = [root];
+//     let queue = [root];
     
-    while (queue.length) {
-        let level = queue.length-1;
+//     while (queue.length) {
+//         let level = queue.length-1;
         
-        for (let i=0; i<=level; i++) {            
-            let curr = queue.shift();
-            if (i === level) {
-                res.push(curr.val)
-            }
-            if (curr.left) queue.push(curr.left);
-            if (curr.right) queue.push(curr.right);
-        }
+//         for (let i=0; i<=level; i++) {            
+//             let curr = queue.shift();
+//             if (i === level) {
+//                 res.push(curr.val)
+//             }
+//             if (curr.left) queue.push(curr.left);
+//             if (curr.right) queue.push(curr.right);
+//         }
         
+//     }
+    
+    const markRight = (node, level) => {
+        if (!node) return;
+        res[level] = node.val;
+        
+        // keep updating values to the right
+        markRight(node.left, level+1);
+        markRight(node.right, level+1);
     }
+    
+    markRight(root, 0);
     
     return res;
 };
